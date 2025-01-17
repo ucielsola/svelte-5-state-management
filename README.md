@@ -1,5 +1,13 @@
 # State Management Flow
 
+## Key Features
+Centralized dispatcher
+Domain-specific stores
+Reactive state with Svelte runes
+Cross-store derived values
+Debug capabilities
+Is this format more readable?
+
 ## Structure
 ```
 lib/
@@ -38,11 +46,3 @@ UI → Action Creator → Dispatcher → Store → UI Update
      double = $derived(...)
    }
    ```
-
-## Key Features
-Centralized dispatcher
-Domain-specific stores
-Reactive state with Svelte runes
-Cross-store derived values
-Debug capabilities
-Is this format more readable?
