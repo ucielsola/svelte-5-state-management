@@ -1,38 +1,48 @@
-# sv
+# State Management Flow
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
-
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
+## Structure
+```
+lib/
+├── common/
+│   ├── dispatcher.svelte.ts     # Central event dispatcher
+│   ├── types.ts                 # Shared type definitions
+│   └── DispatcherDebug.svelte   # Debug UI component
+│
+└── domains/
+    ├── a/
+    │   ├── actions/             # Domain A action creators
+    │   └── stores/              # Domain A state management
+    │
+    └── b/
+        ├── actions/             # Domain B action creators
+        └── stores/              # Domain B state management
 ```
 
-## Developing
+## Flow
+UI → Action Creator → Dispatcher → Store → UI Update
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+## Components Interaction
+1. UI Layer
+   ```
+   <button on:click={aActions.increment}>
+   <p>Value: {aStore.value}</p>
+   ```
+2. Action Layer
+   ```
+   increment: () => dispatcher.dispatch({ type: 'A/INCREMENT' })
+   ```
+3. Store Layer
+   ```
+    class Store {
+     private state = $state(...)
+     double = $derived(...)
+   }
+   ```
 
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+## Key Features
+Centralized dispatcher
+Domain-specific stores
+Reactive state with Svelte runes
+Cross-store derived values
+Debug capabilities
+Is this format more readable?
